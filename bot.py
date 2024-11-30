@@ -41,20 +41,20 @@ async def approve(_, m: Message):
         # Approve the join request
         await app.approve_chat_join_request(op.id, kk.id)
         
-        # Create the message
+        # Create the HTML-formatted message
         message = (
-            f"• Hello {kk.mention}!\n"
-            f"• Your request to join {op.title} has been approved!\n\n"
-            f"> **Powered By : @Team_SAT_25**"
+            f"<b>• Hello {kk.mention}!</b>\n"
+            f"<i>• Your request to join {op.title} has been approved!</i>\n\n"
+            f"<blockquote><b>Powered By:</b> <a href='https://t.me/Team_sat_25'>Team SAT</a></blockquote>"
         )
         
         # Send the message
-        await app.send_message(kk.id, message, parse_mode="markdown")
+        await app.send_message(kk.id, message, parse_mode="html")
         
         # Add the user to the database
         add_user(kk.id)
     except errors.PeerIdInvalid:
-        print(f"User {kk.id} hasn't started the bot, can't send a message.")
+        print("User hasn't started the bot, can't send a message.")
     except Exception as err:
         print(f"Error: {err}")
         
