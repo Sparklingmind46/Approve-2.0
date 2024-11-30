@@ -35,30 +35,29 @@ async def approve(_, m: Message):
     op = m.chat
     kk = m.from_user
     try:
+        # Add the group to the database
         add_group(m.chat.id)
+        
+        # Approve the join request
         await app.approve_chat_join_request(op.id, kk.id)
         
-        # Choose a sticker from a list (replace with your own sticker URLs)
-        sticker = "CAACAgUAAxkBAAECMEJnSwlfSYfNejyq0E_HdJXUID7mHQAC1w4AAnxASFUFk56NnSm1hh4E"  # Example sticker ID
-
-        # Send the sticker
-        await app.send_sticker(kk.id, sticker)
-        
-        # Message with bold and quote for "Powered By : @Team_SAT_25"
+        # Create the message
         message = (
             f"• Hello {kk.mention}!\n"
             f"• Your request to join {op.title} has been approved!\n\n"
             f"> **Powered By : @Team_SAT_25**"
         )
         
+        # Send the message
         await app.send_message(kk.id, message, parse_mode="markdown")
         
+        # Add the user to the database
         add_user(kk.id)
-    except errors.PeerIdInvalid as e:
-        print("User isn't started the bot (i.e., the group)")
+    except errors.PeerIdInvalid:
+        print(f"User {kk.id} hasn't started the bot, can't send a message.")
     except Exception as err:
-        print(str(err))
- 
+        print(f"Error: {err}")
+        
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Start ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 async def approve(_, m: Message):
     op = m.chat
