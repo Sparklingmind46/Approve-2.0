@@ -44,23 +44,49 @@ async def approve(_, m: Message):
         # Send the sticker
         await app.send_sticker(kk.id, sticker)
         
-        # Message with bold and quote for "Powered By : @SdBotz"
-        message = """
-• Hello {}!
-• Your request to join {} has been approved!
-
-> **Powered By : @Team_SAT_25**
-        """.format(m.from_user.mention, m.chat.title)
+        # Message with bold and quote for "Powered By : @Team_SAT_25"
+        message = (
+            f"• Hello {kk.mention}!\n"
+            f"• Your request to join {op.title} has been approved!\n\n"
+            f"> **Powered By : @Team_SAT_25**"
+        )
         
         await app.send_message(kk.id, message, parse_mode="markdown")
-
+        
         add_user(kk.id)
     except errors.PeerIdInvalid as e:
         print("User isn't started the bot (i.e., the group)")
     except Exception as err:
         print(str(err))
  
-#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Start ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Start ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━@app.on_chat_join_request(filters.group | filters.channel & ~filters.private)
+async def approve(_, m: Message):
+    op = m.chat
+    kk = m.from_user
+    try:
+        add_group(m.chat.id)
+        await app.approve_chat_join_request(op.id, kk.id)
+        
+        # Choose a sticker from a list (replace with your own sticker URLs)
+        sticker = "CAACAgEAAxkBAAECMENnSwmwk5_sqBr1v3UydxiQEq2EMQACRQIAAi3l-Q0y_l4Wc4U2wB4E"  # Example sticker ID
+
+        # Send the sticker
+        await app.send_sticker(kk.id, sticker)
+        
+        # Message with bold and quote for "Powered By : @Team_SAT_25"
+        message = (
+            f"• Hello {kk.mention}!\n"
+            f"• Your request to join {op.title} has been approved!\n\n"
+            f"> **Powered By : @Team_SAT_25**"
+        )
+        
+        await app.send_message(kk.id, message, parse_mode="markdown")
+        
+        add_user(kk.id)
+    except errors.PeerIdInvalid as e:
+        print("User isn't started the bot (i.e., the group)")
+    except Exception as err:
+        print(str(err))━━━━━━━━━━━━━━━
 
 @app.on_message(filters.command("start"))
 async def op(_, m :Message):
