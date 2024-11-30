@@ -35,28 +35,30 @@ async def approve(_, m: Message):
     op = m.chat
     kk = m.from_user
     try:
-        # Add the group to the database
         add_group(m.chat.id)
-        
-        # Approve the join request
         await app.approve_chat_join_request(op.id, kk.id)
         
-        # Create the HTML-formatted message
-        message = (
-            f"<b>• Hello {kk.mention}!</b>\n"
-            f"<i>• Your request to join {op.title} has been approved!</i>\n\n"
-            f"<blockquote><b>Powered By:</b> <a href='https://t.me/Team_sat_25'>Team SAT</a></blockquote>"
-        )
+        # Choose a sticker from a list (replace with your own sticker URLs)
+        sticker = "CAACAgEAAxkBAAECMENnSwmwk5_sqBr1v3UydxiQEq2EMQACRQIAAi3l-Q0y_l4Wc4U2wB4E"  # Example sticker ID
+
+        # Send the sticker
+        await app.send_sticker(kk.id, sticker)
         
-        # Send the message
-        await app.send_message(kk.id, message, parse_mode="html")
+        # Message with bold and quote for "Powered By : @SdBotz"
+        message = """
+• Hello {}!
+• Your request to join {} has been approved!
+
+> **Powered By : @Team_SAT_25**
+        """.format(m.from_user.mention, m.chat.title)
         
-        # Add the user to the database
+        await app.send_message(kk.id, message, parse_mode="markdown")
+
         add_user(kk.id)
-    except errors.PeerIdInvalid:
-        print("User hasn't started the bot, can't send a message.")
+    except errors.PeerIdInvalid as e:
+        print("User isn't started the bot (i.e., the group)")
     except Exception as err:
-        print(f"Error: {err}")
+        print(str(err))
         
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Start ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 async def approve(_, m: Message):
