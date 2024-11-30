@@ -1,3 +1,5 @@
+original repo https://github.com/ImDenuwan/Auto-Approve-bot
+
 # Auto-Approve-Bot
 👾 Hey I'll Accept telegram join requests. Easy to use and simple.
 
