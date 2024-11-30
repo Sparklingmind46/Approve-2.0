@@ -39,7 +39,7 @@ async def approve(_, m: Message):
         await app.approve_chat_join_request(op.id, kk.id)
         
         # Choose a sticker from a list (replace with your own sticker URLs)
-        sticker = "CAACAgEAAxkBAAECMENnSwmwk5_sqBr1v3UydxiQEq2EMQACRQIAAi3l-Q0y_l4Wc4U2wB4E"  # Example sticker ID
+        sticker = "CAACAgUAAxkBAAECMEJnSwlfSYfNejyq0E_HdJXUID7mHQAC1w4AAnxASFUFk56NnSm1hh4E"  # Example sticker ID
 
         # Send the sticker
         await app.send_sticker(kk.id, sticker)
@@ -59,7 +59,7 @@ async def approve(_, m: Message):
     except Exception as err:
         print(str(err))
  
-#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Start ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━@app.on_chat_join_request(filters.group | filters.channel & ~filters.private)
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Start ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 async def approve(_, m: Message):
     op = m.chat
     kk = m.from_user
@@ -86,7 +86,7 @@ async def approve(_, m: Message):
     except errors.PeerIdInvalid as e:
         print("User isn't started the bot (i.e., the group)")
     except Exception as err:
-        print(str(err))━━━━━━━━━━━━━━━
+        print(str(err))
 
 @app.on_message(filters.command("start"))
 async def op(_, m :Message):
